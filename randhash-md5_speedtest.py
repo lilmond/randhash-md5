@@ -9,8 +9,20 @@ def main():
         hashes = []
 
         def _stats_check():
+            min_count = 0
+            max_count = 0
+
+            time.sleep(1)
+
             while True:
-                print(f"{len(hashes)} hashes per second.")
+                hashes_count = len(hashes)
+                
+                if hashes_count > max_count:
+                    max_count = hashes_count
+                if hashes_count < min_count or min_count == 0:
+                    min_count = hashes_count
+
+                print(f"{hashes_count} hashes per second | MIN: {min_count} / MAX: {max_count}")
                 hashes.clear()
                 time.sleep(1)
 
