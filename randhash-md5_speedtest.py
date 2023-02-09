@@ -2,10 +2,20 @@ import threading
 import hashlib
 import random
 import string
+import base64
 import time
 
 def main():
     try:
+        print(f"\nSelect a generator type:\n\n:1 - Easy-Fast\n:2 - Hard-Slow\n:3 - Base64_Enc-Hardest-Slowest\n:4 - Base64_Enc-Easy-Fast\n")
+        try:
+            gen_types = [1, 2, 3, 4]
+            gen_type = int(input("Generator Type: "))
+            if not gen_type in gen_types: raise ValueError
+        except ValueError:
+            print("Error: Invalid generator type.")
+            return
+
         hashes = []
 
         def _stats_check():
@@ -28,8 +38,18 @@ def main():
 
         threading.Thread(target=_stats_check, daemon=True).start()
 
-        while True:
-            hashes.append(hashlib.md5("".join(random.choices(string.printable, k=random.randrange(100, 999))).encode()).hexdigest())
+        if gen_type == 1:
+            while True:
+                hashes.append(hashlib.md5("".join(random.choices(string.printable, k=20)).encode()).hexdigest())
+        elif gen_type == 2:
+            while True:
+                hashes.append(hashlib.md5("".join(random.choices(string.printable, k=random.randrange(100, 999))).encode()).hexdigest())
+        elif gen_type == 3:
+            while True:
+                hashes.append(hashlib.md5(base64.b64encode("".join(random.choices(string.printable, k=999)).encode())).hexdigest())
+        elif gen_type == 4:
+            while True:
+                hashes.append(hashlib.md5(base64.b64encode("".join(random.choices(string.printable, k=20)).encode())).hexdigest())
     except KeyboardInterrupt:
         return
 
