@@ -9,17 +9,17 @@ def main():
         hashes = []
 
         def _stats_check():
-            min_count = 0
-            max_count = 0
+            min_count = None
+            max_count = None
 
             time.sleep(1)
 
             while True:
                 hashes_count = len(hashes)
                 
-                if hashes_count > max_count:
+                if max_count == None or hashes_count > max_count:
                     max_count = hashes_count
-                if hashes_count < min_count or min_count == 0:
+                if min_count == None or hashes_count < min_count:
                     min_count = hashes_count
 
                 print(f"{hashes_count} hashes per second | MIN: {min_count} / MAX: {max_count}")
